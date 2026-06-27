@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CsvReader {
@@ -69,7 +70,30 @@ public class CsvReader {
     }
 
     //----------------------------------------------------------------------------------------------------------------------
-    //
+    //3. read restaurants from csv
+    public List<Restaurant> readRestaurantsFromCsv() {
+        String restLine;
+        List<Restaurant> restaurantList = new ArrayList<>();
+        String restaurantcsvFilePath = "C:\\Users\\Chekuru Satwika\\OneDrive\\Documents\\projects\\food-delivery\\food-delivery-cli-app\\food-delivery-cli-app\\data\\restaurants.csv";
+        try(BufferedReader br = new BufferedReader(new FileReader(restaurantcsvFilePath))){
+            br.readLine();
+            while((restLine = br.readLine()) != null){
+                String[] data = restLine.split(",");
+                Restaurant restaurant = new Restaurant();
+                restaurant.setId(data[0])
+                        .setName(data[1])
+                        .setAddress(data[2])
+                        .setMenu(Arrays.asList(data[3].split(";")));
+                restaurantList.add(restaurant);
+            }
+
+        }catch(IOException ioe){
+            System.out.println("file not found" + restaurantcsvFilePath);
+            System.exit(0);
+            ioe.printStackTrace();
+        }
+        return restaurantList;
+    }
 
 
 }
