@@ -1,6 +1,8 @@
 package com.fooddeliveryapp.util;
 
 import com.fooddeliveryapp.model.Customer;
+import com.fooddeliveryapp.model.Dishes;
+import com.fooddeliveryapp.model.Restaurant;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -13,7 +15,7 @@ public class CsvReader {
 
 // read the data from csv files and store in list of objects
 
-    public List<Customer> readCustomersFromCsv()  {
+    public List<Customer> readCustomersFromCsv() {
         String line;
         List<Customer> customersList = new ArrayList<>();
         String csvFilePath = "C:\\Users\\Chekuru Satwika\\OneDrive\\Documents\\projects\\food-delivery\\food-delivery-cli-app\\food-delivery-cli-app\\data\\customers.csv";
@@ -32,11 +34,43 @@ public class CsvReader {
             }
 
         } catch (IOException e) {
-            System.out.println("file not found"+csvFilePath);
+            System.out.println("file not found" + csvFilePath);
             System.exit(0);
             e.printStackTrace();
         }
         return customersList;
     }
+
+    //2. reading dishes from csv file
+    /*----------------------------------------------------------------------------------------------------------------------------*/
+    public List<Dishes> readDishesFromCsv() {
+        String dishLine;
+        List<Dishes> dishesList = new ArrayList<>();
+        String dishCsvFilePath = "C:\\Users\\Chekuru Satwika\\OneDrive\\Documents\\projects\\food-delivery\\food-delivery-cli-app\\food-delivery-cli-app\\data\\dishes.csv";
+        try (BufferedReader br = new BufferedReader(new FileReader(dishCsvFilePath))) {
+            br.readLine();
+            while ((dishLine = br.readLine()) != null) {
+                String[] data = dishLine.split(",");
+                Dishes dishes = new Dishes();
+                dishes.setId(data[0])
+                        .setName(data[1])
+                        .setDescription(data[2])
+                        .setPrice(Double.parseDouble(data[3]));
+                dishesList.add(dishes);
+
+            }
+
+        } catch (IOException ioe) {
+            System.out.println("file not found" + dishCsvFilePath);
+            System.exit(0);
+            ioe.printStackTrace();
+        }
+        return dishesList;
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------
+    //
+
+
 }
 

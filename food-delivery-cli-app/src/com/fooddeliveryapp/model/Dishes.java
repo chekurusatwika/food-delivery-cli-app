@@ -18,32 +18,36 @@ String id, String name, String description, double price */
         return id;
     }
 
-    public void setId(String id) {
+    public Dishes setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Dishes setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public Dishes setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public Dishes setPrice(double price) {
         this.price = price;
+        return this;
     }
 
     @Override
