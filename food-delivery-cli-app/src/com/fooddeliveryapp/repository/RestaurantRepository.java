@@ -18,4 +18,10 @@ public class RestaurantRepository {
     public List<Restaurant> getAllRestaurants(){
         return restaurantList;
     }
+
+    //1.add resturant
+    public Restaurant addRestaurant(Restaurant restaurant){
+        this.restaurantList.add(restaurant);
+        return restaurant;
+    }
 }
