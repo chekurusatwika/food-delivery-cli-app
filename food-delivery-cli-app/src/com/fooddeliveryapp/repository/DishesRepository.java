@@ -18,4 +18,10 @@ public class DishesRepository {
     public List<Dishes> getAllDishes(){
         return dishesList;
     }
+
+    //1.add dish
+    public Dishes addDish(Dishes dish){
+        this.dishesList.add(dish);
+        return dish;
+    }
 }
