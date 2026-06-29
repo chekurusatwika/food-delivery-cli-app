@@ -5,6 +5,7 @@ import com.fooddeliveryapp.util.CsvReader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RestaurantRepository {
     private List<Restaurant> restaurantList;
@@ -23,5 +24,10 @@ public class RestaurantRepository {
     public Restaurant addRestaurant(Restaurant restaurant){
         this.restaurantList.add(restaurant);
         return restaurant;
+    }
+
+    //2. get by resturantId
+    public Optional<Restaurant> getRestaurantById(String id){
+         return restaurantList.stream().filter(restaurant -> restaurant.getId().equals(id)).findFirst();
     }
 }
