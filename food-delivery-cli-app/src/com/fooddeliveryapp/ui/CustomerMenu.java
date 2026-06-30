@@ -4,6 +4,8 @@ import com.fooddeliveryapp.controller.CustomerController;
 import com.fooddeliveryapp.controller.DishesController;
 import com.fooddeliveryapp.controller.RestaurantController;
 import com.fooddeliveryapp.exceptions.CustomerExsistsException;
+import com.fooddeliveryapp.exceptions.DishesExsistsException;
+import com.fooddeliveryapp.exceptions.RestuarantExsistaException;
 import com.fooddeliveryapp.model.Customer;
 import com.fooddeliveryapp.model.Dishes;
 import com.fooddeliveryapp.model.Restaurant;
@@ -13,6 +15,7 @@ import com.fooddeliveryapp.service.*;
 import com.fooddeliveryapp.util.Factory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -33,9 +36,11 @@ public class CustomerMenu {
             System.out.println("2.Login ( already exsisting customer)");
             System.out.println("3. View Dishes Menu");
             System.out.println("4. view Restaurants");
-            System.out.println("5. Place Orders");
-            System.out.println("6. View Orders");
-            System.out.println("7. Exit");
+            System.out.println("5.Add new Dish");
+            System.out.println("6.Add new Restaurants");
+            System.out.println("7. Place Orders");
+            System.out.println("8. View Orders");
+            System.out.println("9. Exit");
             System.out.println("--------------------------------------------------------");
             System.out.print("Enter your choice(1-7): ");
             int choice = sc.nextInt();
@@ -49,7 +54,13 @@ public class CustomerMenu {
                 case 4:
                     displayRestaurantsList();
                     break;
-                case 7:
+                case 5:
+                    displayAddDishMenu();
+                    break;
+                case 6:
+                    displayAddRestaurantMenu();
+                    break;
+                case 9:
                     System.out.println("thankyou plz visit again");
                     System.exit(0);
                     break;
@@ -59,6 +70,79 @@ public class CustomerMenu {
 
 
         }
+    }
+
+    private void displayAddRestaurantMenu() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("please register new Restaurant");
+        System.out.println("please enter restaurant ID:");
+        String restaurantID = sc.nextLine();
+        System.out.println("please enter restaurant name:");
+        String restaurantName = sc.nextLine();
+        System.out.println("please enter restaurant address:");
+        String restaurantAddress = sc.nextLine();
+        System.out.println("please enter restaurant Menu:");
+        String restaurantMenu = sc.nextLine();
+        Restaurant restaurant = new Restaurant();
+        restaurant.setId(restaurantID)
+                    .setName(restaurantName)
+                .setAddress(restaurantAddress)
+                .setMenu(Arrays.asList(restaurantMenu.split(",")));
+        RestaurantController restaurantController = Factory.getRestaurantController();
+        try{
+            restaurantController.addRestaurant(restaurant);
+            if(restaurant!= null){
+                System.out.println("restaurant has been added successfully");
+                System.out.println("Restaurant ID: " + restaurant.getId());
+                System.out.println("Restaurant Name: " + restaurant.getName());
+                System.out.println("Restaurant Address: " + restaurant.getAddress());
+                System.out.println("Restaurant Menu: " + restaurant.getMenu());
+            }else{
+                System.out.println("restaurant is null add again");
+                displayAddRestaurantMenu();
+            }
+        }catch(RestuarantExsistaException re){
+            System.out.println(re.getMessage());
+            displayAddRestaurantMenu();
+        }
+    }
+
+    private void displayAddDishMenu() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Add new dish to the Menu");
+        System.out.println("Enter dish ID: ");
+        String dishId = sc.nextLine();
+        System.out.println("Enter dish name: ");
+        String dishName = sc.nextLine();
+        System.out.println("Enter dish description: ");
+        String dishDescription = sc.nextLine();
+        System.out.println("Enter dish price: ");
+        double dishPrice = sc.nextDouble();
+        Dishes dish = new Dishes();
+        dish.setId(dishId)
+            .setName(dishName)
+            .setDescription(dishDescription)
+            .setPrice(dishPrice);
+        DishesController dishesController = Factory.getDishesController();
+        try{
+            dishesController.addDishes(dish);
+            if(dish != null) {
+                System.out.println("Dish added successfully");
+                System.out.println("dish ID :" + dish.getId());
+                System.out.println("dish name :" + dish.getName());
+                System.out.println("dish description :" + dish.getDescription());
+                System.out.println("dish price :" + dish.getPrice());
+            }else{
+                System.out.println("dish is null please enter the data");
+                displayRegisterMenu();
+
+            }
+        }catch(DishesExsistsException de){
+            System.out.println(de.getMessage());
+            System.out.println("some internal error please try again with main menu");
+            displayAddDishMenu();
+        }
+
     }
 
     private void displayRestaurantsList() {
