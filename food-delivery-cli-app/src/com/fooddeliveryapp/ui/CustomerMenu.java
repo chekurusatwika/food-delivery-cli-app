@@ -2,14 +2,14 @@ package com.fooddeliveryapp.ui;
 
 import com.fooddeliveryapp.controller.CustomerController;
 import com.fooddeliveryapp.controller.DishesController;
+import com.fooddeliveryapp.controller.RestaurantController;
 import com.fooddeliveryapp.exceptions.CustomerExsistsException;
 import com.fooddeliveryapp.model.Customer;
 import com.fooddeliveryapp.model.Dishes;
+import com.fooddeliveryapp.model.Restaurant;
 import com.fooddeliveryapp.repository.CustomerRepository;
 import com.fooddeliveryapp.repository.DishesRepository;
-import com.fooddeliveryapp.service.CustomerServiceImpl;
-import com.fooddeliveryapp.service.DishesService;
-import com.fooddeliveryapp.service.DishesServiceImpl;
+import com.fooddeliveryapp.service.*;
 import com.fooddeliveryapp.util.Factory;
 
 import java.util.ArrayList;
@@ -46,6 +46,9 @@ public class CustomerMenu {
                 case 3:
                     displayDishesList() ;
                     break;
+                case 4:
+                    displayRestaurantsList();
+                    break;
                 case 7:
                     System.out.println("thankyou plz visit again");
                     System.exit(0);
@@ -56,6 +59,19 @@ public class CustomerMenu {
 
 
         }
+    }
+
+    private void displayRestaurantsList() {
+        RestaurantController restaurantController = Factory.getRestaurantController();
+        List<Restaurant> restaurantList = restaurantController.getAllRestaurants();
+        displayMenuHeader("Restaurant List Menu");
+        String dashLines = new String(new char[150]).replace("\0", "-");
+        System.out.format("%-10s %-30s %-80s %-10s\n","Id","Name","Address","Menu");
+        System.out.println(dashLines);
+        restaurantList.forEach(restaurant -> {
+            System.out.printf("%-10s %-30s %-80s %-10s\n",restaurant.getId(),restaurant.getName(),restaurant.getAddress(),restaurant.getMenu());
+        });
+
     }
 
     private void displayDishesList() {
