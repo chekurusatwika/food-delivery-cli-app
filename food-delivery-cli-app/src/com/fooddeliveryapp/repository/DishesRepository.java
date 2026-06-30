@@ -2,7 +2,9 @@ package com.fooddeliveryapp.repository;
 
 import com.fooddeliveryapp.model.Dishes;
 import com.fooddeliveryapp.util.CsvReader;
+import com.fooddeliveryapp.util.Factory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,8 +12,10 @@ public class DishesRepository {
     private List<Dishes> dishesList;
 
     public DishesRepository(){
-        CsvReader csvReader = new CsvReader();
-        this.dishesList = csvReader.readDishesFromCsv();
+        /*CsvReader csvReader = new CsvReader();
+        this.dishesList = csvReader.readDishesFromCsv();*/
+        this.dishesList = Factory.getCsvReader().readDishesFromCsv(); // here the getcsvreader method gives csvreadr obj
+        // and then on that obj perfrom readdishes from csv method
 
     }
 
